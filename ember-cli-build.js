@@ -4,7 +4,18 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
-    // Add options here
+    minifyJS: {
+      enabled: false
+    },
+    minifyCSS: {
+      enabled: false
+    },
+    sassOptions: {
+        includePaths: [
+          'node_modules/spinkit/scss',
+          'node_modules/spinkit/scss/spinners',
+        ]
+    }
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -19,6 +30,16 @@ module.exports = function(defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
+  app.import('bower_components/bootstrap/dist/js/bootstrap.js');
+  app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+  app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css');
+  app.import('bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff', {
+    destDir: 'fonts'
+  });
 
+  app.import('vendor/holder.js');
+  app.import('vendor/ie-emulation-modes-warning.js');
+  app.import('vendor/ie10-viewport-bug-workaround.js');
+  
   return app.toTree();
 };

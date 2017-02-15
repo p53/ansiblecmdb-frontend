@@ -1,0 +1,57 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            {{#if isAscending}}
+                <th{{ action "sortBy" "props" "desc" }} class="sortable">
+                    Property
+                    {{# if (eq sortField 'props') }}
+                        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="false"></span>
+                    {{ else }}
+                        <span aria-hidden="true"></span>
+                    {{/if}}
+                </th>
+                <th {{ action "sortBy" "val" "desc" }} class="sortable">
+                    Value
+                    {{#if (eq sortField 'val') }}
+                        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="false"></span>
+                    {{ else }}
+                        <span aria-hidden="true"></span>                    
+                    {{/if}}
+                </th>
+            {{ else }}
+                <th{{ action "sortBy" "props" "asc" }} class="sortable">
+                    Property
+                    {{# if (eq sortField 'props') }}
+                        <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="false"></span>
+                    {{ else }}
+                        <span aria-hidden="true"></span>
+                    {{/if}}
+                </th>
+                <th {{ action "sortBy" "val" "asc" }} class="sortable">
+                    Value
+                    {{# if (eq sortField 'val') }}
+                        <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="false"></span>
+                    {{ else }}
+                        <span aria-hidden="true"></span>
+                    {{/if}}
+                </th>
+            {{/if}}
+        </tr>
+    </thead>
+    <tbody>
+        {{#each sortedData as |propVal|}}
+            <tr>
+                <td>{{ get propVal 'key' }}</td>
+                <td>
+                    {{# if ( is-array (get propVal 'val') ) }}
+                        {{#each (get propVal 'val') as |valueItem|}}
+                            {{ valueItem }}<br>
+                        {{/each}}
+                    {{else}}
+                        {{ get propVal 'val' }}
+                    {{/if}}                        
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>  

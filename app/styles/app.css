@@ -1,0 +1,12 @@
+@import "dashboard.css";
+@import "ie10-viewport-bug-workaround.css";
+
+.scrollable-menu {
+    height: auto;
+    max-height: 180px;
+    overflow-x: hidden;
+}
+
+.sortable-table-header {
+    display: block    
+}

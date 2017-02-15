@@ -1,0 +1,99 @@
+<div class="table-responsive relative-parent">
+
+    {{#if loading }}<div class="sk-rotating-plane"></div>{{/if}}
+
+    <div class="dropdown col-md-4">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Dates
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
+        {{# each sortedDates as |date| }}
+            {{ filters-link-to filter="filterByDate" params=queryParams value=date.key displayValue=date.keyAsString controllerAction=dateFilterAction }}
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class="col-md-4">
+        {{ input class="form-control" key-up="filterByTermEvent" placeholder="Search..." }}
+    </div>
+
+    <div class="dropdown col-md-4">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Show Items
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
+        {{# each pageSizeRange as |possibleSize|}}
+            {{ pagesize-link-to route="hosts" page=1 value=possibleSize currentValue=pageSize }}
+        {{/each}}
+      </ul>
+    </div>
+
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li>
+            {{#link-to "hosts" (query-params page=1) aria-label="Previous"}}
+                <span aria-hidden="true">&laquo;</span>
+            {{/link-to}}
+        </li>
+        {{# each numPagesArray as |pageNumber| }}
+            {{ pagenumber-link-to route="hosts" value=pageNumber currentValue=page }}
+        {{/each}}
+        <li>
+            {{#link-to "hosts" (query-params page=numPages) aria-label="Next"}}
+                <span aria-hidden="true">&raquo;</span>
+            {{/link-to}}
+        </li>
+      </ul>
+    </nav>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            {{#each selectedFields as |field|}}
+                {{ sortable-table-field route="hosts" currentValue=sortField sortOrder=sortOrder value=field }}
+            {{/each}}
+        </tr>
+        </thead>
+        <tbody>
+        {{#each filteredModels as |computer|}}
+        <tr>
+            {{#each selectedFields as |field|}}
+                <td>{{ get-at-index computer field }}</td>
+            {{/each}}
+        </tr>
+        {{/each}}
+
+        {{# each emptyTableRowArray as |number| }}
+        <tr>
+            {{#each selectedFields as |field|}}
+                <td>&nbsp;</td>
+            {{/each}}
+            <td>&nbsp;</td>
+        </tr>
+        {{/each}}
+
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li>
+            {{#link-to "hosts" (query-params page=1) aria-label="Previous"}}
+                <span aria-hidden="true">&laquo;</span>
+            {{/link-to}}
+        </li>
+        {{# each numPagesArray as |pageNumber| }}
+            {{ pagenumber-link-to route="hosts" value=pageNumber currentValue=page }}
+        {{/each}}
+        <li>
+            {{#link-to "hosts" (query-params page=numPages) aria-label="Next"}}
+                <span aria-hidden="true">&raquo;</span>
+            {{/link-to}}
+        </li>
+      </ul>
+    </nav>
+
+</div>
+{{outlet}}

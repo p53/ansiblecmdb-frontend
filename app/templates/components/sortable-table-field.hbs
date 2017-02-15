@@ -1,0 +1,10 @@
+{{#link-to route (query-params sortField=value sortOrder=linkSortOrder) class="sortable-table-header" }}
+    {{ value }}
+    {{#if active}}
+        {{#if isAscending}}
+            <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+        {{else}}
+            <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+        {{/if}}
+    {{/if}}
+{{/link-to}}

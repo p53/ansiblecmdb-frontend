@@ -1,0 +1,435 @@
+<div class="row">
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+        <h4 class="page-header">GlobalNotes</h4>
+    </div>
+    {{#if hostDetails.note.isFulfilled }}
+        {{content-editable 
+            value=hostDetails.note.note
+            placeholder="Your name"
+            type="text"
+            focus-out="save"
+            focus-in="focusGlobalNotes"
+            class=(concat "col-sm-offset-3 col-md-offset-3 col-sm-2 col-md-8" " " (if globalNotesFocus 'notesFocusIn' 'notesFocusOut'))
+        }}
+    {{/if}}
+</div>
+
+<div class="row">
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+        <h4 class="page-header">Local Notes</h4>
+    </div>
+    {{content-editable 
+        value=hostDetails.localNotes
+        placeholder="Your name"
+        type="text"
+        focus-out="save"
+        focus-in="focusNotes"
+        class=(concat "col-sm-offset-3 col-md-offset-3 col-sm-2 col-md-8" " " (if localNotesFocus 'notesFocusIn' 'notesFocusOut'))
+    }}
+</div>
+
+<div class="row">
+    <div class="col-sm-1 col-sm-offset-3 col-md-1 col-md-offset-2">
+        <button 
+            type="button" 
+            class="btn btn-outline-info" 
+            data-toggle="button" 
+            aria-pressed="false" 
+            autocomplete="off"
+            {{ action "toggleBoxAll" }}
+        >
+            Toggle show/hide
+        </button>
+    </div>
+</div>
+
+<div class="row detailRow">
+    <div class="col-sm-1 col-sm-offset-3 col-md-1 col-md-offset-2 boxLabel" {{ action "toggleBox" 'machine' }}>
+        <h4 class="boxHeader">Machine</h4>
+    </div>
+    <div class="col-sm-2 col-md-4 detailBox machine">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>ansibleNodename</td>
+                    <td>{{ hostDetails.ansibleNodename }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleBiosDate</td>
+                    <td>{{ hostDetails.ansibleBiosDate }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleBiosVersion</td>
+                    <td>{{ hostDetails.ansibleBiosVersion }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleProductUuid</td>
+                    <td>{{ hostDetails.ansibleProductUuid }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleMachineId</td>
+                    <td>{{ hostDetails.ansibleMachineId }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleProductVersion</td>
+                    <td>{{ hostDetails.ansibleProductVersion }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleProductName</td>
+                    <td>{{ hostDetails.ansibleProductName }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleSystemVendor</td>
+                    <td>{{ hostDetails.ansibleSystemVendor }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleFormFactor</td>
+                    <td>{{ hostDetails.ansibleFormFactor }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleProductSerial</td>
+                    <td>{{ hostDetails.ansibleProductSerial }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row detailRowEven">
+    <div class="col-sm-1 col-sm-offset-3 col-md-1 col-md-offset-2 boxLabel" {{ action "toggleBox" 'virtualization' }}>
+        <h4 class="boxHeader">Virtualization</h4>
+    </div>
+    <div class="col-sm-2 col-md-4 detailBoxEven virtualization">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>ansibleVirtualizationRole</td>
+                    <td>{{ hostDetails.ansibleVirtualizationRole }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleVirtualizationType</td>
+                    <td>{{ hostDetails.ansibleVirtualizationType }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row detailRow">
+    <div class="col-sm-1 col-sm-offset-3 col-md-1 col-md-offset-2 boxLabel" {{ action "toggleBox" 'operating_system' }}>
+        <h4 class="boxHeader">OS</h4>
+    </div>
+    <div class="col-sm-2 col-md-4 detailBox operating_system">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>ansibleKernel</td>
+                    <td>{{ hostDetails.ansibleKernel }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleDistribution</td>
+                    <td>{{ hostDetails.ansibleDistribution }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleDistributionRelease</td>
+                    <td>{{ hostDetails.ansibleDistributionRelease }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleOsFamily</td>
+                    <td>{{ hostDetails.ansibleOsFamily }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleSystem</td>
+                    <td>{{ hostDetails.ansibleSystem }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleDistributionVersion</td>
+                    <td>{{ hostDetails.ansibleDistributionVersion }}</td>
+                </tr>
+                {{#if hostDetails.ansibleLsb }}
+                    <tr>
+                        <td>ansibleOsDescription</td>
+                        <td>{{ hostDetails.ansibleLsb.description }}</td>
+                    </tr>
+                {{/if}}
+                <tr>
+                    <td>timezone</td>
+                    <td>{{ hostDetails.ansibleDateTime.tz }} {{ hostDetails.ansibleDateTime.tz_offset }}</td>
+                </tr>
+                <tr>
+                    <td>time</td>
+                    <td>{{ hostDetails.ansibleDateTime.date }} {{ hostDetails.ansibleDateTime.time }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row detailRowEven">
+    <div class="col-sm-1 col-sm-offset-3 col-md-1 col-md-offset-2 boxLabel" {{ action "toggleBox" 'cpu' }}>
+        <h4 class="boxHeader">CPU</h4>
+    </div>
+    <div class="col-sm-2 col-md-4 detailBoxEven cpu">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>ansibleArchitecture</td>
+                    <td>{{ hostDetails.ansibleArchitecture }}</td>
+                </tr>
+                <tr>
+                    <td rowspan="{{ add processorNames.length 1 }}">ansibleProcessor</td>
+                </tr>
+                {{#each processorNames as |item| }}
+                    <tr>
+                        <td>
+                            {{item}}
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-2 col-md-3 detailBox cpu">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>ansibleProcessorVcpus</td>
+                    <td>{{ hostDetails.ansibleProcessorVcpus }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleProcessorCount</td>
+                    <td>{{ hostDetails.ansibleProcessorCount }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleProcessorCores</td>
+                    <td>{{ hostDetails.ansibleProcessorCores }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleProcessorThreadsPerCore</td>
+                    <td>{{ hostDetails.ansibleProcessorThreadsPerCore }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row detailRow">
+    <div class="col-sm-1 col-sm-offset-3 col-md-1 col-md-offset-2 boxLabel" {{ action "toggleBox" 'memory' }}>
+        <h4 class="boxHeader">Memory</h4>
+    </div>
+    <div class="col-sm-2 col-md-4 detailBoxEven memory">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>ansibleMemtotal</td>
+                    <td>{{ number-to-human-size (mult hostDetails.ansibleMemtotalMb 1048576) false 2 }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleSwaptotal</td>
+                    <td>{{ number-to-human-size (mult hostDetails.ansibleSwaptotalMb 1048576) false 2 }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row detailRowEven">
+    <div class="col-sm-1 col-sm-offset-3 col-md-1 col-md-offset-2 boxLabel" {{ action "toggleBox" 'network' }}>
+        <h4 class="boxHeader">Network</h4>
+    </div>
+    <div class="col-sm-2 col-md-3 detailBox network">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Default Ipv4 Interface</th>
+                </tr>
+                {{#each-in hostDetails.ansibleDefaultIpv4 as |interfaceProp interfacePropVal| }}
+                    <tr>
+                        <td>
+                            {{ interfaceProp }}
+                        </td>
+                        <td>
+                            {{ interfacePropVal }}
+                        </td>
+                    </tr>
+                {{/each-in}}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-2 col-md-4 detailBoxEven network">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>DNS</th>
+                </tr>
+                <tr>
+                    <td>ansibleFqdn </td>
+                    <td>{{ hostDetails.ansibleFqdn }}</td>
+                </tr>
+                <tr>
+                    <td>ansibleDomain </td>
+                    <td>{{ hostDetails.ansibleDomain }}</td>
+                </tr>
+                <tr>
+                    <td rowspan="{{ add hostDetails.ansibleDns.nameservers.length 1 }}">nameservers</td>
+                </tr>
+                {{#each hostDetails.ansibleDns.nameservers as |nameserver| }}
+                    <tr>
+                        <td>
+                            {{ nameserver }}
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-sm-2 col-md-3 detailBox network">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td rowspan="{{ add hostDetails.ansibleAllIpv4Addresses.length 1 }}"><strong>IPv4 addresses</strong></td>
+                </tr>
+                {{#each hostDetails.ansibleAllIpv4Addresses as |item| }}
+                    <tr>
+                        <td>
+                            {{item}}
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-2 col-md-3 detailBoxEven network">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td rowspan="{{ add hostDetails.ansibleAllIpv6Addresses.length 1 }}"><strong>IPv6 addresses</strong></td>
+                </tr>
+                {{#each hostDetails.ansibleAllIpv6Addresses as |item| }}
+                    <tr>
+                        <td>
+                            {{item}}
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-sm-2 col-md-3 detailBox network">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td rowspan="{{ add hostDetails.ansibleInterfaces.length 1 }}"><strong>ansibleInterfaces</strong></td>
+                </tr>
+                {{#each hostDetails.ansibleInterfaces as |item| }}
+                    <tr>
+                        <td>
+                            {{ item }}
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div class="row detailRow">
+    <div class="col-sm-1 col-sm-offset-3 col-md-1 col-md-offset-2 boxLabel" {{ action "toggleBox" 'storage' }}>
+        <h4 class="boxHeader">Storage</h4>
+    </div>
+    <div class="col-sm-2 col-md-9 storage">
+        <h3>Devices</h3>
+        <table class="table">
+            <thead>
+                <th>Device</th>
+                <th>Model</th>
+                <th>Vendor</th>
+                <th>Size</th>
+                <th>Sector Size</th>
+                <th>Rotational</th>
+                <th>Removable</th>
+                <th>SAS Address</th>
+                <th>Discard Support</th>
+            </thead>
+            <tbody>
+                {{#each-in storageFacts.ansibleDevices as |deviceName device|}}
+                    <tr>
+                        <td>{{ deviceName }}</td>
+                        <td>{{ device.model }}</td>
+                        <td>{{ device.vendor }}</td>
+                        <td>{{ number-to-human-size (mult (regexp-replace device.size 'GB' '') 1073741824) false 2 }}</td>
+                        <td>{{ number-to-human-size device.sectorsize false 2 }}</td>
+                        <td>{{#if device.rotational }}True{{ else }}False{{/if}}</td>
+                        <td>{{# if device.removable }}True{{ else }}False{{/if}}</td>
+                        <td>{{ device.sas_address }}</td>
+                        <td>{{# if device.support_discard }}True{{ else }}False{{/if}}</td>
+                    </tr>
+                {{/each-in}}
+            </tbody>
+        </table>
+
+        <h3>Mounts</h3>
+        <table class="table">
+            <thead>
+                <th>Mount</th>
+                <th>Device</th>
+                <th>Fs Type</th>
+                <th>Mount Options</th>
+                <th>Free</th>
+                <th>Total</th>
+                <th>Uuid</th>
+            </thead>
+            <tbody>
+                {{#each storageFacts.ansibleMounts as |mountpoint|}}
+                    <tr>
+                        <td>{{ mountpoint.mount }}</td>
+                        <td>{{ mountpoint.device }}</td>
+                        <td>{{ mountpoint.fstype }}</td>
+                        <td>{{ mountpoint.options }}</td>
+                        <td>{{ number-to-human-size mountpoint.size_available false 2 }}</td>
+                        <td>{{ number-to-human-size mountpoint.size_total false 2 }}</td>
+                        <td>{{ mountpoint.uuid }}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+        <h3>Lvm</h3>
+        <table class="table">
+            {{#each-in storageFacts.vgs as |vgname vg|}}
+                <tr>
+                    <td><strong>Vgname:</strong></td>
+                    <td>{{vgname}}</td>
+                    <td><strong>Size:</strong> {{ number-to-human-size (mult vg.size_g 1073741824) false 2 }}</td>
+                    <td><strong>Free:</strong> {{ number-to-human-size (mult vg.free_g 1073741824) false 2 }}</td>
+                    <td><strong>Lvs:</strong> {{ vg.num_lvs }}</td>
+                    <td><strong>Pvs:</strong> {{ vg.num_pvs }}</td>
+                </tr>
+                {{#each-in vg.lvs as |lvname lv|}}
+                    <tr>
+                        <td></td>
+                        <td>{{lvname}}</td>
+                        <td><strong>Size:</strong> {{ number-to-human-size (mult lv.size_g 1073741824) false 2 }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {{/each-in}}
+            {{/each-in}}
+        </table>
+    </div>
+
+</div>
+
+<div class="row detailRowEven">
+
+    <div class="col-sm-1 col-sm-offset-3 col-md-1 col-md-offset-2 boxLabel" {{ action "toggleBox" 'ec2' }}>
+        <h4 class="boxHeader">AWS EC2</h4>
+    </div>
+
+    {{ property-table data=ec2Facts }}
+  
+</div>

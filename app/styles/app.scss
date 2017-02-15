@@ -1,0 +1,101 @@
+@import "dashboard";
+@import "ie10-viewport-bug-workaround";
+@import "ember-power-select";
+
+.scrollable-menu {
+    height: auto;
+    max-height: 180px;
+    overflow-x: hidden;
+}
+
+.sortable-table-header {
+    display: block    
+}
+
+$spinkit-spinner-margin: 40px auto !default;
+$spinkit-size: 80px !default;
+$spinkit-spinner-color: #78C6F0 !default;
+
+$elements: sk-rotating-plane;
+
+.relative-parent {
+  position: relative;
+}
+
+@mixin centerer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sk-rotating-plane {
+  width: $spinkit-size;
+  height: $spinkit-size;
+  background-color: $spinkit-spinner-color;
+  margin: $spinkit-spinner-margin;
+  animation: sk-rotatePlane 1.2s infinite ease-in-out;
+  z-index: 99999;
+  @include centerer;
+}
+
+@keyframes sk-rotatePlane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  } 50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+  } 100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+
+.boxLabel {
+    cursor: pointer;
+}
+.detailBox {
+    background-color: #DEF3FA;
+    border-radius: 15px;
+    border: 1px solid white;    
+}
+
+.detailBoxEven {
+    background-color: #D2F0FA;
+    border-radius: 15px;
+    border: 1px solid white;    
+}
+
+.detailRow {
+    background-color: #FAF4F2;
+    border-radius: 15px;
+    border: 2px solid white;
+}
+
+.detailRowEven {
+    background-color: #F0F0F5;
+    border-radius: 15px;
+    border: 2px solid white;
+}
+
+.sortable {
+    cursor: pointer;
+}
+
+.notesFocusOut {
+    background-color: #DEF3FA;
+    border-radius: 15px;
+    border: 1px solid white;     
+    padding: 10px;
+    margin-bottom: 20px;
+    color: grey;
+    outline: none;
+}
+
+.notesFocusIn {
+    background-color: #A8E4F7;
+    border-radius: 15px;
+    border: 1px solid white;     
+    padding: 10px;
+    margin-bottom: 20px;
+    color: black;
+    outline: none;
+}
