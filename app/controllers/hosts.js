@@ -58,6 +58,9 @@ export default Ember.Controller.extend({
             }
             
             this.transitionToRoute('hosts', { queryParams: params});
+        },
+        getDetail: function(value) {
+            this.transitionToRoute('host', value);
         }
     }
 });    

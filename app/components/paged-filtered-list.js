@@ -103,6 +103,9 @@ export default Ember.Component.extend({
         },
         filterByTermEvent: function(value) {
             this.get('termFilterAction')(value);
+        },
+        getDetail: function(value, action) {
+            this.get('detailAction')(value);
         }
     }
 });
