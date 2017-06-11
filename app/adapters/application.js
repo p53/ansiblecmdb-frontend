@@ -7,6 +7,7 @@ export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
     namespace: config.APP.API_NAMESPACE,
     host: config.APP.API_HOST,
     ajax: function(url, method, hash) {
+        if (hash === undefined) { hash = {}; }
         hash.crossDomain = true;
         hash.xhrFields = {withCredentials: true};
         return this._super(url, method, hash);
