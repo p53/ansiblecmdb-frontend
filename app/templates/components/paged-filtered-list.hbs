@@ -60,9 +60,14 @@
         {{#each filteredModels as |computer|}}
         <tr>
             {{#each selectedFields as |field|}}
-                <td class="server-listing-item" {{ action "getDetail" computer.id detailAction }}>{{ get-at-index computer field }}</td>
+                <td class="server-listing-item" {{ action "getDetail" computer.id }}>{{ get-at-index computer field }}</td>
             {{/each}}
 
+            <td>
+                <button class="btn btn-primary btn-block" {{ action "deleteHostItem" computer.id }}>
+                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                </button>
+            </td>
             <td>
                 <a href="#" class="btn btn-primary btn-block" role="button">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>

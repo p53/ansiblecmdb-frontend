@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+    store: Ember.inject.service(),
+
     sortedDates: Ember.computed.sort('dates', 'datesSortDef'),
     datesSortDef: ['key:desc'],
     pageSizeRange: [5,10,20,50,100],
@@ -16,14 +18,14 @@ export default Ember.Component.extend({
         return [...Array(emptyRows).keys()];
     }),
     
-    numPages:  Ember.computed('data', 'pageSize', function() {
-        let modulo = this.data.get('length') % this.get('pageSize');
+    numPages:  Ember.computed('data.[]', 'pageSize', function() {
+        let modulo = this.get('data').get('length') % this.get('pageSize');
         let pages = 0;
 
         if (modulo) {
-            pages = Math.floor((this.data.get('length') / this.get('pageSize'))) + 1;
+            pages = Math.floor((this.get('data').get('length') / this.get('pageSize'))) + 1;
         } else {
-            pages = (this.data.get('length') / this.get('pageSize'));
+            pages = (this.get('data').get('length') / this.get('pageSize'));
         }
         
         return pages;
@@ -63,9 +65,10 @@ export default Ember.Component.extend({
         return [...Array(pagerViewNum).keys()].map(function(num) { return num + firstPage; });
     }),
     
-    filteredModels: Ember.computed('data', 'filterByDate', 'pageSize', 'page', 'sortField', 'sortOrder', 'selectedFields.[]', function() {
+    filteredModels: Ember.computed('data.[]', 'filterByDate', 'pageSize', 'page', 'sortField', 'sortOrder', 'selectedFields.[]', function() {
         let start = this.get('page')*this.get('pageSize')-this.get('pageSize');
         let end = this.get('page')*this.get('pageSize');
+        let filterDate = this.get('filterByDate');
         let result;
         let defaultSortField = '';
         
@@ -76,11 +79,11 @@ export default Ember.Component.extend({
         }
 
         if (this.get('sortOrder') === 'asc') {
-            result = this.data.sortBy(defaultSortField).slice(start, end);
+            result = this.get('data').sortBy(defaultSortField).slice(start, end);
         } else if (this.get('sortOrder') === 'desc') {
-            result = this.data.sortBy(defaultSortField).reverse().slice(start, end);
+            result = this.get('data').sortBy(defaultSortField).reverse().slice(start, end);
         } 
-        
+
         return result;
     }),
     
@@ -106,6 +109,22 @@ export default Ember.Component.extend({
         },
         getDetail: function(value, action) {
             this.get('detailAction')(value);
+        },
+        deleteHostItem: function(value) {
+            let indexToRemove;
+            let hostToRemove;
+            
+            this.get('data').find(
+                function(item, index, enumerable) {
+                    if (item.get('id') == value) {
+                        indexToRemove = index;
+                        hostToRemove = item;
+                    }
+                }
+            );
+
+            this.get('data').removeObject(hostToRemove);
+            hostToRemove.destroyRecord();
         }
     }
 });
