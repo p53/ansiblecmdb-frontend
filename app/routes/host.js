@@ -8,7 +8,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         let hostId = params.host_id;
         
         return Ember.RSVP.hash({
-            host: this.get('store').findRecord('host', hostId)
+            host: this.get('store').findRecord('host', hostId, {reload: true})
         });
     }
 });
