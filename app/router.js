@@ -8,6 +8,7 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
     this.route('hosts');
+    this.route('items');
     this.route('login');
     this.route('host', { path: '/host/:host_id' });
 });

@@ -8,17 +8,24 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         },
         filterByTerm: {
             refreshModel: true
+        },
+        static: {
+            refreshModel: true
         }
     },
     model(params) {
         let parameters = {};
-        
+ 
         if (params.filterByDate) {
             parameters['filterByDate'] = params.filterByDate;
         }
         
         if (params.filterByTerm) {
             parameters['filterByTerm'] = params.filterByTerm;
+        }
+        
+        if (params.static) {
+            parameters['static'] = params.static;
         }
         
         return Ember.RSVP.hash({

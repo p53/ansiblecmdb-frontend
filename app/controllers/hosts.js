@@ -7,7 +7,8 @@ export default Ember.Controller.extend({
         'sortField',
         'sortOrder',
         'filterByDate',
-        'filterByTerm'
+        'filterByTerm',
+        'static'
     ],
     filterByDate: "",
     filterByTerm: "",
@@ -16,16 +17,17 @@ export default Ember.Controller.extend({
     pagerView: 4,
     sortField: "",
     sortOrder: 'asc',
+    static: false,
     chartData: [],
     loading: false,
     actions: {
         dateInit: function(sortedDates) {
-            if (!this.get('filterByDate')) {
+            if (!this.get('filterByDate') && !this.get('static')) {
                 let params = {
                     filterByDate: sortedDates.get('firstObject').get('key'),
                     page: this.get('page'),
                     pageSize: this.get('pageSize'),
-                    pagerView: this.get('pagerView')
+                    pagerView: this.get('pagerView'),
                 };
 
                 this.transitionToRoute('hosts', { queryParams: params});

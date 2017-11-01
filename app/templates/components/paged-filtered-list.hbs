@@ -3,15 +3,18 @@
     {{#if loading }}<div class="sk-rotating-plane"></div>{{/if}}
 
     <div class="dropdown col-md-4">
-      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        Dates
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
-        {{# each sortedDates as |date| }}
-            {{ filters-link-to filter="filterByDate" params=queryParams value=date.key displayValue=date.keyAsString controllerAction=dateFilterAction }}
-        {{/each}}
-      </ul>
+      {{#if queryParams.static }}
+      {{else}}
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          Dates
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
+          {{# each sortedDates as |date| }}
+              {{ filters-link-to filter="filterByDate" params=queryParams value=date.key displayValue=date.keyAsString controllerAction=dateFilterAction }}
+          {{/each}}
+        </ul>
+      {{/if}}
     </div>
 
     <div class="col-md-4">
@@ -64,19 +67,20 @@
             {{/each}}
 
             <td>
-                <button class="btn btn-primary btn-block" {{ action "deleteHostItem" computer.id }}>
+                <button class="btn btn-primary btn-block" {{ action "deleteHostItem" computer }}>
                     <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                 </button>
             </td>
             <td>
-                <a href="#" class="btn btn-primary btn-block" role="button">
-                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                </a>
-            </td>
-            <td>
-                <a href="#" class="btn btn-primary btn-block" role="button">
-                    <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
-                </a>
+                {{#if computer.static }}
+                    <button class="btn btn-primary btn-block" {{ action "toggleStatic" computer }}>
+                        <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                    </button>
+                {{else}}
+                    <button class="btn btn-primary btn-block" {{ action "toggleStatic" computer }}>
+                        <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
+                    </button>
+                {{/if}}
             </td>
         </tr>
         {{/each}}

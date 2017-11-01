@@ -65,7 +65,7 @@ export default Ember.Component.extend({
         return [...Array(pagerViewNum).keys()].map(function(num) { return num + firstPage; });
     }),
     
-    filteredModels: Ember.computed('data.[]', 'filterByDate', 'pageSize', 'page', 'sortField', 'sortOrder', 'selectedFields.[]', function() {
+    filteredModels: Ember.computed('data.[]', 'static', 'filterByDate', 'pageSize', 'page', 'sortField', 'sortOrder', 'selectedFields.[]', function() {
         let start = this.get('page')*this.get('pageSize')-this.get('pageSize');
         let end = this.get('page')*this.get('pageSize');
         let filterDate = this.get('filterByDate');
@@ -87,14 +87,15 @@ export default Ember.Component.extend({
         return result;
     }),
     
-    queryParams: Ember.computed('filterByDate', 'pageSize', 'page', 'sortField', 'sortOrder', function() {
+    queryParams: Ember.computed('static', 'filterByDate', 'pageSize', 'page', 'sortField', 'sortOrder', function() {
         let params = {};
         params = {
             'filterByDate': this.get('filterByDate'),
             'pageSize': this.get('pageSize'),
             'page': this.get('page'),
             'sortField': this.get('sortField'),
-            'sortOrder': this.get('sortOrder')
+            'sortOrder': this.get('sortOrder'),
+            'static': this.get('static')
         };
 
         return params;
@@ -110,21 +111,28 @@ export default Ember.Component.extend({
         getDetail: function(value, action) {
             this.get('detailAction')(value);
         },
-        deleteHostItem: function(value) {
-            let indexToRemove;
-            let hostToRemove;
+        deleteHostItem: function(computer) {
+            self = this;
             
-            this.get('data').find(
-                function(item, index, enumerable) {
-                    if (item.get('id') == value) {
-                        indexToRemove = index;
-                        hostToRemove = item;
+            computer.destroyRecord().then(
+                function() {
+                    self.get('data').removeObject(computer);
+                }
+            );
+        },
+        toggleStatic: function(computer) {
+            self = this;
+            let newStatic = computer.get('static') ? false : true;
+            
+            computer.set('static', newStatic);
+            
+            computer.save().then(
+                function() {
+                    if (self.get('static') && newStatic == false) {
+                        self.get('data').removeObject(computer);
                     }
                 }
             );
-
-            this.get('data').removeObject(hostToRemove);
-            hostToRemove.destroyRecord();
         }
     }
 });

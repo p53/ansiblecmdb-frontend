@@ -3,6 +3,7 @@ import DS from 'ember-data';
 export default DS.Model.extend({
     globalNote: Ember.computed.alias('note.note'),
     note: DS.belongsTo('note', { async: true }),
+    static: DS.attr(),
     localNotes: DS.attr(),
     ansibleEc2AmiLaunchIndex: DS.attr(),
     ansibleEc2SecurityGroups: DS.attr('ec2sec'),
