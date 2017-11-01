@@ -1,0 +1,29 @@
+{{ top-navigation }}
+
+<div class="container-fluid">
+  <div class="row">
+
+    {{ sidebar-navigation }}
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Dashboard</h1>
+
+        <h2 class="sub-header">Section title</h2>
+
+        {{ simple-paged-filtered-list 
+            data=model.hosts
+            dates=model.dates 
+            page=page 
+            pageSize=pageSize
+            pagerView=pagerView
+            termFilterAction=( action 'filterByTerm')
+            detailAction=( action 'getDetail' )
+            sortOrder=sortOrder
+            sortField=sortField
+            loading=loading
+        }}
+
+    </div>
+  </div>
+</div>
+
