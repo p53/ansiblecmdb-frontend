@@ -20,6 +20,14 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         let hostFields = this.get('user').get('user').get('settings')['host_fields'];
         let graphFields = this.get('user').get('user').get('settings')['graph_fields'];
 
+        if (typeof hostFields == "undefined") {
+            hostFields = ["ansibleHostname", "ansibleOsFamily", "ansibleSystem"];
+        }
+        
+        if (typeof graphFields == "undefined") {
+            graphFields = ["ansibleHostname", "ansibleOsFamily", "ansibleSystem", "ansibleDistribution"];
+        }
+        
         if (!hostFields.length) {
             hostFields = ["ansibleHostname", "ansibleOsFamily", "ansibleSystem"];
         }

@@ -94,6 +94,10 @@ export default Ember.Controller.extend({
             let updatedUser = this.get('user').get('user');
             let settings = updatedUser.get('settings');
                 
+            if (Array.isArray(settings)) {
+                settings = {};
+            }
+            
             settings['host_page'] = value;
             
             updatedUser.set('settings', settings);
@@ -105,6 +109,10 @@ export default Ember.Controller.extend({
             let updatedUser = this.get('user').get('user');
             let settings = updatedUser.get('settings');
                 
+            if (Array.isArray(settings)) {
+                settings = {};
+            }
+            
             settings['host_fields'] = value;
             
             updatedUser.set('settings', settings);
@@ -120,10 +128,14 @@ export default Ember.Controller.extend({
             let updatedUser = this.get('user').get('user');
             let settings = updatedUser.get('settings');
 
+            if (Array.isArray(settings)) {
+                settings = {};
+            }
+                
             this.set('graphFields', value);
 
             settings['graph_fields'] = value;
-                
+
             updatedUser.set('settings', settings);
             updatedUser.save();
         }
