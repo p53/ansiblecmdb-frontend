@@ -4,27 +4,28 @@ export default Ember.Component.extend({
     store: Ember.inject.service(),
     
     propsSorting: [':asc'],
-    chartOptions: {
-        chart: {
-            type: 'pie'
-        },
-        title: {
-            text: '',
-            style: {
-                display: 'none'
-            }            
-        }
-    },
-
+    chartOptions: Ember.computed('selectedModelProperty', function() {
+        let options = {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: this.get('selectedModelProperty')         
+            }
+        };
+        
+        return options;
+    }),
+    
     init() {
         this._super(...arguments);
-        this.send('initChart', this.get('sortedModelProps')[0]);
+        this.send('initChart', this.get('selectedModelProperty'));
     },
     
-    sortedModelProps: Ember.computed.sort('modelProps', 'propsSorting'),
-    modelProps: Ember.computed('models.[]', function() {
-        return Object.keys(this.get('models').get('firstObject').toJSON());
-    }),
+//    sortedModelProps: Ember.computed.sort('modelProps', 'propsSorting'),
+//    modelProps: Ember.computed('models.[]', function() {
+//        return Object.keys(this.get('models').get('firstObject').toJSON());
+//    }),
     normalizedChartData: Ember.computed('chartData', function() {
         let formatedData = {};
         formatedData['name'] = this.get('selectedModelProperty');
@@ -44,18 +45,6 @@ export default Ember.Component.extend({
 
         return [formatedData];
     }),
-
-    selectedModelProperty: Ember.computed('defaultProp', 'sortedModelProps.[]', function() {  
-        let prop = "";
-        
-        if ( ! this.get('defaultProp') ) {
-            prop = this.get('sortedModelProps')[0];
-        } else {
-            prop =  this.get('defaultProp');
-        }
-
-        return prop;
-    }),
     
     filterByDateChanged: Ember.observer('filterByDate', function() {
         this.send('initChart', this.get('selectedModelProperty'));
@@ -73,7 +62,7 @@ export default Ember.Component.extend({
                 this.get('store').query('propertyhistogram', params).then(
                     function(data) {
                         self.set('chartData', data);
-                        self.set('selectedModelProperty', value);
+//                        self.set('selectedModelProperty', value);
                     },reject => {
                         console.log('error');
                      }

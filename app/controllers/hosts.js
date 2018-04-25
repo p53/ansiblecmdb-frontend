@@ -1,6 +1,8 @@
 import Ember from 'ember';
+import Host from '../models/host';
 
 export default Ember.Controller.extend({
+    user: Ember.inject.service('current-user'),
     queryParams: [
         'page',
         'pageSize',
@@ -8,7 +10,9 @@ export default Ember.Controller.extend({
         'sortOrder',
         'filterByDate',
         'filterByTerm',
-        'static'
+        'static',
+        'selectedFields',
+        'graphFields'
     ],
     filterByDate: "",
     filterByTerm: "",
@@ -20,13 +24,29 @@ export default Ember.Controller.extend({
     static: false,
     chartData: [],
     loading: false,
+    graphFields: [],
+    selectedFields: [],
+    fieldsOptions: Ember.computed('user.[]', function(){
+        let fields = [];
+        
+        Ember.get(Host, 'attributes').forEach(function(meta, name) {
+            if (name.includes('ansible')) {
+                fields.push(name);
+            }
+        });
+        
+        return fields.sort();
+    }),
     actions: {
-        dateInit: function(sortedDates) {
+        dateInit: function(sortedDates) {           
             if (!this.get('filterByDate') && !this.get('static')) {
+                let pageNum = this.get('user').get('user').get('settings')['host_page'];
+                pageNum = pageNum ? pageNum : this.get('pageSize');
+                
                 let params = {
                     filterByDate: sortedDates.get('firstObject').get('key'),
                     page: this.get('page'),
-                    pageSize: this.get('pageSize'),
+                    pageSize: pageNum,
                     pagerView: this.get('pagerView'),
                 };
 
@@ -63,6 +83,49 @@ export default Ember.Controller.extend({
         },
         getDetail: function(value) {
             this.transitionToRoute('host', value);
+        },
+        savePageSize: function(value) {
+            let params = {
+                filterByDate:  this.get('filterByDate'),
+                page: 1,
+                pageSize: value
+            };
+
+            let updatedUser = this.get('user').get('user');
+            let settings = updatedUser.get('settings');
+                
+            settings['host_page'] = value;
+            
+            updatedUser.set('settings', settings);
+            updatedUser.save();
+            
+            this.transitionToRoute('hosts', { queryParams: params});
+        },
+        updateFields: function(value) {
+            let updatedUser = this.get('user').get('user');
+            let settings = updatedUser.get('settings');
+                
+            settings['host_fields'] = value;
+            
+            updatedUser.set('settings', settings);
+            updatedUser.save();
+            
+            this.set('selectedFields', value);
+            
+            if (!value.includes(this.get('sortField'))) {
+                this.set('sortField', value[0]);
+            }
+        },
+        updateGraphFields: function(value) {
+            let updatedUser = this.get('user').get('user');
+            let settings = updatedUser.get('settings');
+
+            this.set('graphFields', value);
+
+            settings['graph_fields'] = value;
+                
+            updatedUser.set('settings', settings);
+            updatedUser.save();
         }
     }
 });    

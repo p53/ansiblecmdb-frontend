@@ -4,7 +4,13 @@ export default Ember.Component.extend({
     store: Ember.inject.service(),
 
     pageSizeRange: [5,10,20,50,100],
-    selectedFields: ["ansibleHostname", "ansibleOsFamily", "ansibleSystem"],
+    selectedFields: [],
+    fields: [],
+    
+    init() {
+        this._super(...arguments);
+        this.get('initRouteAction')();
+    },
     
     emptyTableRowArray: Ember.computed('pageSize', 'filteredModels', function(){
         let emptyRows = this.get('pageSize') - this.get('filteredModels').length;
@@ -106,6 +112,10 @@ export default Ember.Component.extend({
                     self.get('data').removeObject(computer);
                 }
             );
+        },
+        updateFields: function(value) {
+            this.set('selectedFields', value);
+            this.get('updateFieldsAction')(value);
         }
     }
 });

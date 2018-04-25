@@ -1,0 +1,20 @@
+{{ top-navigation }}
+
+<div class="container-fluid">
+    <div class="row">
+
+        {{ sidebar-navigation }}
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <h1 class="page-header">User Settings</h1>
+        </div>
+    </div>
+
+    {{ user-setting 
+        user=model.user
+    }}
+
+</div>
+
+
+    

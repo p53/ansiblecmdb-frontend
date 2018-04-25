@@ -6,8 +6,9 @@ export default Ember.Component.extend({
     sortedDates: Ember.computed.sort('dates', 'datesSortDef'),
     datesSortDef: ['key:desc'],
     pageSizeRange: [5,10,20,50,100],
-    selectedFields: ["ansibleHostname", "ansibleOsFamily", "ansibleSystem"],
-
+    selectedFields: [],
+    fields: [],
+    
     init() {
         this._super(...arguments);
         this.get('initRouteAction')(this.get('sortedDates'));
@@ -133,6 +134,10 @@ export default Ember.Component.extend({
                     }
                 }
             );
+        },
+        updateFields: function(value) {
+            this.set('selectedFields', value);
+            this.get('updateFieldsAction')(value);
         }
     }
 });

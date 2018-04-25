@@ -2,10 +2,17 @@ import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
+    user: Ember.inject.service('current-user'),
     queryParams: {
         filterByTerm: {
             refreshModel: true
         }
+    },
+    setupController: function(controller, model){
+        this._super(controller, model);
+        let userService = this.get('user');
+        let hostFields = this.get('user').get('user').get('settings')['item_fields'];
+        controller.set('selectedFields', hostFields);
     },
     model(params) {
         let parameters = {};

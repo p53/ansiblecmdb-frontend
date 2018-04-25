@@ -11,7 +11,15 @@ export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
         hash.crossDomain = true;
         hash.xhrFields = {withCredentials: true};
         return this._super(url, method, hash);
-    }    
+    },
+    urlForQueryRecord(query) {
+      if (query.me) {
+        delete query.me;
+        return `${this._super(...arguments)}/me`;
+      }
+
+      return this._super(...arguments);
+    }
 });
 
 

@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-sm-2 col-md-2 col-sm-offset-3 col-md-offset-2">
+        {{#if user.isSaving }}<div class="sk-rotating-plane"></div>{{/if}}
+        <form>
+            {{#if error}}
+                <div class="alert alert-danger" role="alert">{{ error }}</div>
+            {{/if}}
+            <div class="form-group">
+                <label>Password</label>
+                {{input type="password" value=(mut password)}}
+                <label>Repeat Password</label>
+                {{input type="password" value=(mut repeatPassword)}}
+            </div>
+            <button type="button" class="btn btn-primary" {{ action 'updateUser' }}>Apply</button>
+        </form>
+    </div>
+</div>

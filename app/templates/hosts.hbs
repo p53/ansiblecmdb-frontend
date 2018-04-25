@@ -1,68 +1,64 @@
 {{ top-navigation }}
 
 <div class="container-fluid">
-  <div class="row">
+    <div class="row">
 
-    {{ sidebar-navigation }}
+        {{ sidebar-navigation }}
 
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <h1 class="page-header">Dashboard</h1>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Dashboard</h1>
 
-        <div class="row placeholders">
-          <div class="col-xs-6 col-sm-3 placeholder">
-            {{ property-pie-chart 
-                models=model.hosts
-                defaultProp=""
+            <div class="row">
+                <div class="form-group col-md-4">
+                    {{#power-select-sortable
+                      options=fieldsOptions
+                      selected=graphFields
+                      placeholder="graph fields"
+                      onchange=(action 'updateGraphFields')
+                      as |field|
+                    }}
+                        {{field}}
+                    {{/power-select-sortable}}
+                </div>
+            </div>
+
+            <div class="row placeholders">
+                {{#each graphFields as |field| }}
+                    <div class="col-xs-6 col-sm-3 placeholder">
+                        {{ property-pie-chart 
+                            models=model.hosts
+                            filterByDate=filterByDate
+                            chartData=[]
+                            selectedModelProperty=field
+                        }}
+                    </div>                
+                {{/each}}
+            </div>
+
+            <h2 class="sub-header">Section title</h2>
+
+            {{ paged-filtered-list 
+                data=model.hosts
+                dates=model.dates 
+                page=page 
+                pageSize=pageSize
                 filterByDate=filterByDate
-                chartData=[]
+                static=static
+                pagerView=pagerView
+                initRouteAction=( action 'dateInit' )
+                dateFilterAction=( action 'filterByDate' )
+                termFilterAction=( action 'filterByTerm' )
+                savePageSizeAction=( action 'savePageSize' )
+                detailAction=( action 'getDetail' )
+                sortOrder=sortOrder
+                sortField=sortField
+                loading=loading
+                selectedFields=selectedFields
+                fields=fieldsOptions
+                updateFieldsAction=( action 'updateFields' )
             }}
-          </div>
-          <div class="col-xs-6 col-sm-3 placeholder">
-            {{ property-pie-chart 
-                models=model.hosts
-                defaultProp=""
-                filterByDate=filterByDate
-                chartData=[]
-            }}
-          </div>
-          <div class="col-xs-6 col-sm-3 placeholder">
-            {{ property-pie-chart 
-                models=model.hosts
-                defaultProp=""
-                filterByDate=filterByDate
-                chartData=[]
-            }}
-          </div>
-          <div class="col-xs-6 col-sm-3 placeholder">
-            {{ property-pie-chart 
-                models=model.hosts
-                defaultProp=""
-                filterByDate=filterByDate
-                chartData=[]
-            }}
-          </div>
+
         </div>
-
-        <h2 class="sub-header">Section title</h2>
-
-        {{ paged-filtered-list 
-            data=model.hosts
-            dates=model.dates 
-            page=page 
-            pageSize=pageSize
-            filterByDate=filterByDate
-            static=static
-            pagerView=pagerView
-            initRouteAction=( action 'dateInit' )
-            dateFilterAction=( action 'filterByDate' )
-            termFilterAction=( action 'filterByTerm')
-            detailAction=( action 'getDetail' )
-            sortOrder=sortOrder
-            sortField=sortField
-            loading=loading
-        }}
-
     </div>
-  </div>
 </div>
 

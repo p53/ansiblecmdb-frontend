@@ -2,23 +2,35 @@
 
     {{#if loading }}<div class="sk-rotating-plane"></div>{{/if}}
 
-    <div class="dropdown col-md-4">
+    <div class="dropdown col-md-2">
     </div>
 
     <div class="col-md-4">
         {{ input class="form-control" key-up="filterByTermEvent" placeholder="Search..." }}
     </div>
 
-    <div class="dropdown col-md-4">
+    <div class="dropdown col-md-2">
       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         Show Items
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
         {{# each pageSizeRange as |possibleSize|}}
-            {{ pagesize-link-to route="hosts" page=1 value=possibleSize currentValue=pageSize }}
+            {{ pagesize-link-to route="hosts" page=1 value=possibleSize currentValue=pageSize controllerAction=savePageSizeAction }}
         {{/each}}
       </ul>
+    </div>
+
+    <div class="form-group col-md-4">
+        {{#power-select-sortable
+          options=fields
+          selected=selectedFields
+          placeholder="fields"
+          onchange=(action 'updateFields')
+          as |field|
+        }}
+          {{field}}
+        {{/power-select-sortable}}
     </div>
 
     <nav aria-label="Page navigation">
@@ -43,7 +55,7 @@
         <thead>
         <tr>
             {{#each selectedFields as |field|}}
-                {{ sortable-table-field route="hosts" currentValue=sortField sortOrder=sortOrder value=field }}
+                {{ sortable-table-field route="items" currentValue=sortField sortOrder=sortOrder value=field }}
             {{/each}}
         </tr>
         </thead>

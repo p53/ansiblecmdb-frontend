@@ -8,5 +8,10 @@ export default Ember.Component.extend({
             return true;
         }
         return false;
-    })
+    }),
+    actions: {
+        setPageSize: function(value) {
+            this.get('controllerAction')(value);
+        }
+    }
 });
