@@ -19,7 +19,7 @@ export default Ember.Controller.extend({
     sortOrder: 'asc',
     chartData: [],
     loading: false,
-    selectedFields: ["ansibleHostname", "ansibleOsFamily", "ansibleSystem"],
+    selectedFields: [],
     fieldsOptions: Ember.computed('user.[]', function(){
         let fields = [];
         
@@ -34,13 +34,13 @@ export default Ember.Controller.extend({
     actions: {
         initController: function() {
             let pageNum = this.get('user').get('user').get('settings')['item_page'];
-
-            pageNum = pageNum ? pageNum : this.get('pageSize');
             
+            pageNum = pageNum ? pageNum : this.get('pageSize');
+
             let params = {
                 page: this.get('page'),
                 pageSize: pageNum,
-                pagerView: this.get('pagerView'),
+                pagerView: this.get('pagerView')
             };
 
             this.transitionToRoute('items', { queryParams: params});
@@ -73,6 +73,10 @@ export default Ember.Controller.extend({
             let updatedUser = this.get('user').get('user');
             let settings = updatedUser.get('settings');
                 
+            if (Array.isArray(settings)) {
+                settings = {};
+            }
+            
             settings['item_page'] = value;
             
             updatedUser.set('settings', settings);
@@ -83,7 +87,11 @@ export default Ember.Controller.extend({
         updateFields: function(value) {
             let updatedUser = this.get('user').get('user');
             let settings = updatedUser.get('settings');
-                
+             
+            if (Array.isArray(settings)) {
+                settings = {};
+            }
+            
             settings['item_fields'] = value;
             
             updatedUser.set('settings', settings);

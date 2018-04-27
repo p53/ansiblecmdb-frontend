@@ -11,8 +11,17 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     setupController: function(controller, model){
         this._super(controller, model);
         let userService = this.get('user');
-        let hostFields = this.get('user').get('user').get('settings')['item_fields'];
-        controller.set('selectedFields', hostFields);
+        let itemFields = this.get('user').get('user').get('settings')['item_fields'];
+        
+        if (typeof itemFields == "undefined") {
+            itemFields = ["ansibleHostname", "ansibleOsFamily", "ansibleSystem"];
+        }
+        
+        if (!itemFields.length) {
+            itemFields = ["ansibleHostname", "ansibleOsFamily", "ansibleSystem"];
+        }
+        
+        controller.set('selectedFields', itemFields);
     },
     model(params) {
         let parameters = {};
