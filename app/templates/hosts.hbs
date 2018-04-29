@@ -6,6 +6,9 @@
         {{ sidebar-navigation }}
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+            {{#if loading }}<div class="sk-rotating-plane"></div>{{/if}}
+
             <h1 class="page-header">Dashboard</h1>
 
             <div class="row">
@@ -55,6 +58,7 @@
                 loading=loading
                 selectedFields=selectedFields
                 fields=fieldsOptions
+                staticFilterAction=( action 'staticFilter' )
                 updateFieldsAction=( action 'updateFields' )
             }}
 

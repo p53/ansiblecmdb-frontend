@@ -23,7 +23,7 @@ $elements: sk-rotating-plane;
 }
 
 @mixin centerer {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -107,10 +107,77 @@ $elements: sk-rotating-plane;
 }
 
 form label {
-
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: #333;
     background-color: #fff;
     font-style: italic;
+}
+
+@mixin font-face($name) {
+  @font-face {
+    font-family: $name;
+    src:  url("/assets/fonts/#{$name}.eot?") format("eot"),
+	  url("/assets/fonts/#{$name}.ttf") format("truetype"),
+          url("/assets/fonts/#{$name}.woff2") format("woff2");
+  }
+}
+
+@include font-face("neuropol_x_rg");
+
+.form-signin-heading {
+    font-size: 250%
+}
+
+.app-login {
+	width: 100wh;
+	height: 100vh;
+	color: #fff;
+	background: linear-gradient(-45deg, #283c86, #45a247, #1d977b, #5d469a  );
+	background-size: 400% 400%;
+	-webkit-animation: Gradient 15s ease infinite;
+	-moz-animation: Gradient 15s ease infinite;
+	animation: Gradient 15s ease infinite;
+        font-family: "neuropol_x_rg";
+}
+
+.app-name {
+    font-family: "neuropol_x_rg";
+}
+
+.app-login input {background-color: grey; border: 0px   }
+@-webkit-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@-moz-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
 }
