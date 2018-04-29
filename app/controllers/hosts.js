@@ -81,6 +81,21 @@ export default Ember.Controller.extend({
             
             this.transitionToRoute('hosts', { queryParams: params});
         },
+        staticFilter: function(value) {
+            let params = {
+                filterByDate: this.get('filterByDate'),
+                page: 1,
+                pageSize: this.get('pageSize')
+            };
+
+            if (value) {
+                params['static'] = true;
+            } else {
+                params['static'] = false;
+            }
+
+            this.transitionToRoute('hosts', { queryParams: params});
+        },
         getDetail: function(value) {
             this.transitionToRoute('host', value);
         },

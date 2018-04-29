@@ -138,6 +138,9 @@ export default Ember.Component.extend({
         updateFields: function(value) {
             this.set('selectedFields', value);
             this.get('updateFieldsAction')(value);
+        },
+        filterStatic: function(value) {
+            this.get("staticFilterAction")(value);
         }
     }
 });

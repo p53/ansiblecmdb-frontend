@@ -1,7 +1,5 @@
 <div class="table-responsive relative-parent">
 
-    {{#if loading }}<div class="sk-rotating-plane"></div>{{/if}}
-
     <div class="dropdown col-md-2">
       {{#if queryParams.static }}
       {{else}}
@@ -69,6 +67,16 @@
             {{#each selectedFields as |field|}}
                 {{ sortable-table-field route="hosts" currentValue=sortField sortOrder=sortOrder value=field }}
             {{/each}}
+            <td></td>
+            <td>
+                {{x-toggle 
+                  theme="flip"
+                  value=queryParams.static
+                  onToggle=(action "filterStatic")
+                  onLabel="Static"
+                  offLabel="Static"
+                }}
+            </td>
         </tr>
         </thead>
         <tbody>
