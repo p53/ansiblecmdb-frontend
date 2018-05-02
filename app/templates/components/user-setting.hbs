@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-2 col-md-2 col-sm-offset-3 col-md-offset-2">
+    <div class="col-xs-7 col-sm-3 col-md-3 col-xm-offset-2 col-sm-offset-3 col-md-offset-2">
         {{#if user.isSaving }}<div class="sk-rotating-plane"></div>{{/if}}
         <form>
             {{#if error}}
@@ -7,9 +7,9 @@
             {{/if}}
             <div class="form-group">
                 <label>Password</label>
-                {{input type="password" value=(mut password)}}
+                {{input type="password" class="form-control" value=(mut password)}}
                 <label>Repeat Password</label>
-                {{input type="password" value=(mut repeatPassword)}}
+                {{input type="password" class="form-control" value=(mut repeatPassword)}}
             </div>
             <button type="button" class="btn btn-primary" {{ action 'updateUser' }}>Apply</button>
         </form>
