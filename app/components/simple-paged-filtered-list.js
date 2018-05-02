@@ -6,6 +6,7 @@ export default Ember.Component.extend({
     pageSizeRange: [5,10,20,50,100],
     selectedFields: [],
     fields: [],
+    searchedHost: "",
     
     init() {
         this._super(...arguments);
@@ -97,9 +98,15 @@ export default Ember.Component.extend({
         return params;
     }),
     
+    triggerTermFilter: function() {
+        this.get('termFilterAction')(this.get("searchedHost"));
+    },
+    
     actions: {
         filterByTermEvent: function(value) {
-            this.get('termFilterAction')(value);
+            if (value.length >=3 || value.length == 0) {
+                Ember.run.debounce(this, this.triggerTermFilter, 1000);
+            }
         },
         getDetail: function(value, action) {
             this.get('detailAction')(value);
