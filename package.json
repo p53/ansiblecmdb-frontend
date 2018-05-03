@@ -49,7 +49,9 @@
     "ember-string-helpers": "1.0.2",
     "ember-welcome-page": "^1.0.1",
     "highcharts": "5.0.0",
+    "hoek": "^5.0.3",
     "loader.js": "^4.0.1",
+    "moment": "^2.22.1",
     "spinkit": "^1.2.5"
   },
   "devDependencies": {
