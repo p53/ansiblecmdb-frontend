@@ -14,6 +14,7 @@ module.exports = function(defaults) {
         includePaths: [
           'node_modules/spinkit/scss',
           'node_modules/spinkit/scss/spinners',
+          'bower_components/bootstrap-sass/assets/stylesheets'
         ]
     }
   });
@@ -30,11 +31,9 @@ module.exports = function(defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
-  app.import('bower_components/bootstrap/dist/js/bootstrap.js');
-  app.import('bower_components/bootstrap/dist/css/bootstrap.css');
-  app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css');
-  app.import('bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff', {
-    destDir: 'fonts'
+  app.import('bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js');
+  app.import('bower_components/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff', {
+    destDir: '/fonts/bootstrap'
   });
 
   app.import('vendor/holder.js');

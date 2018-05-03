@@ -1,6 +1,17 @@
+$brand-primary: darken(#0d82b8, 6.5%);
+$navbar-primary-bg: darken(#0d82b8, 6.5%);
+@import "bootstrap";
 @import "dashboard";
 @import "ie10-viewport-bug-workaround";
 @import "ember-power-select";
+
+.trans {
+    background: rgba(186, 195, 199, 0.4);
+    top: 50%;
+    -webkit-transform: translateY(50%);
+    -ms-transform: translateY(50%);
+    transform: translateY(50%);
+}
 
 .scrollable-menu {
     height: auto;
@@ -124,10 +135,6 @@ form label {
 }
 
 @include font-face("neuropol_x_rg");
-
-.form-signin-heading {
-    font-size: 250%
-}
 
 .app-login {
 	width: 100wh;
